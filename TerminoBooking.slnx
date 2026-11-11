@@ -1,1 +1,5 @@
-<Solution />
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/TerminoBooking.Domain/TerminoBooking.Domain.csproj" />
+  </Folder>
+</Solution>
