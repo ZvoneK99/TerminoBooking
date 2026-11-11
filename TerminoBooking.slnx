@@ -2,4 +2,7 @@
   <Folder Name="/src/">
     <Project Path="src/TerminoBooking.Domain/TerminoBooking.Domain.csproj" />
   </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/TerminoBooking.UnitTests/TerminoBooking.UnitTests.csproj" />
+  </Folder>
 </Solution>
