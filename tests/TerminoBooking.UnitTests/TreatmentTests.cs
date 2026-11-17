@@ -30,5 +30,31 @@ namespace TerminoBooking.UnitTests
             Assert.Throws<ArgumentException>(() => new Treatment("Prvi pregled", duration, -10m));
         }
 
+        [Theory]
+        [InlineData("")]
+        [InlineData("   ")]
+        [InlineData(null)]
+        public void Constructor_WithInvalidName_Throws(string? name)
+        {
+            // Arrange
+            var duration = TimeSpan.FromMinutes(45);
+
+            // Act & Assert
+            Assert.Throws<ArgumentException>(() => new Treatment(name!, duration, 50m));
+        }
+
+        [Theory]
+        [InlineData(0)]
+        [InlineData(-15)]
+        [InlineData(540)]
+        public void Constructor_WithInvalidDuration_Throws(int minutes)
+        {
+            var duration = TimeSpan.FromMinutes(minutes);
+
+            // Act & Assert
+            Assert.Throws<ArgumentException>(() => new Treatment("Prvi pregled", duration, 50m));
+        }
+
+
     }
 }
