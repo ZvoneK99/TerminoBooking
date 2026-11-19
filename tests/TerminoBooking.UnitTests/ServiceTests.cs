@@ -2,22 +2,22 @@
 
 namespace TerminoBooking.UnitTests
 {
-    public class TreatmentTests
+    public class ServiceTests
     {
         [Fact]
-        public void Constructor_WithValidData_CreatesTreatment()
+        public void Constructor_WithValidData_CreatesService()
         {
             //Arrange
             var duration = TimeSpan.FromMinutes(45);
 
             //Act
-            var treatment = new Treatment("Prvi pregled", duration, 50m);
+            var service = new Service("Prvi pregled", duration, 50m);
 
             //Assert
-            Assert.Equal("Prvi pregled", treatment.Name);
-            Assert.Equal(duration, treatment.Duration);
-            Assert.Equal(50m, treatment.Price);
-            Assert.NotEqual(Guid.Empty, treatment.Id);
+            Assert.Equal("Prvi pregled", service.Name);
+            Assert.Equal(duration, service.Duration);
+            Assert.Equal(50m, service.Price);
+            Assert.NotEqual(Guid.Empty, service.Id);
         }
 
         [Fact]
@@ -27,7 +27,7 @@ namespace TerminoBooking.UnitTests
             var duration = TimeSpan.FromMinutes(45);
 
             // Act & Assert
-            Assert.Throws<ArgumentException>(() => new Treatment("Prvi pregled", duration, -10m));
+            Assert.Throws<ArgumentException>(() => new Service("Prvi pregled", duration, -10m));
         }
 
         [Theory]
@@ -40,7 +40,7 @@ namespace TerminoBooking.UnitTests
             var duration = TimeSpan.FromMinutes(45);
 
             // Act & Assert
-            Assert.Throws<ArgumentException>(() => new Treatment(name!, duration, 50m));
+            Assert.Throws<ArgumentException>(() => new Service(name!, duration, 50m));
         }
 
         [Theory]
@@ -52,7 +52,7 @@ namespace TerminoBooking.UnitTests
             var duration = TimeSpan.FromMinutes(minutes);
 
             // Act & Assert
-            Assert.Throws<ArgumentException>(() => new Treatment("Prvi pregled", duration, 50m));
+            Assert.Throws<ArgumentException>(() => new Service("Prvi pregled", duration, 50m));
         }
 
 
