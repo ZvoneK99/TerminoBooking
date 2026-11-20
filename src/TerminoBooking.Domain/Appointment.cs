@@ -29,5 +29,19 @@
         {
             return Start < other.End && other.Start < End;
         }
+
+        public void Cancel(DateTime now)
+        {
+            if (Status != AppointmentStatus.Confirmed)
+                throw new InvalidOperationException("Može se otkazati samo potvrđen termin!");
+
+            if (now > Start.AddHours(-24))
+            {
+                throw new InvalidOperationException("Termin se može otkazati najranije 24 sata prije početka!");
+            }
+
+            Status = AppointmentStatus.Cancelled;
+        }
+
     }
 }
