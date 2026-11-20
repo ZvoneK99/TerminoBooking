@@ -25,5 +25,9 @@
             End = start + service.Duration;
             Status = AppointmentStatus.Confirmed;
         }
+        public bool OverlapsWith(Appointment other)
+        {
+            return Start < other.End && other.Start < End;
+        }
     }
 }
