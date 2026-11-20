@@ -27,6 +27,11 @@
         }
         public bool OverlapsWith(Appointment other)
         {
+            if (Status == AppointmentStatus.Cancelled || other.Status == AppointmentStatus.Cancelled)
+            {
+                return false;
+            }
+
             return Start < other.End && other.Start < End;
         }
 

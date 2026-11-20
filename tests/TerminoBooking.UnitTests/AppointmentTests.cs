@@ -124,6 +124,22 @@ namespace TerminoBooking.UnitTests
             Assert.Throws<InvalidOperationException>(() => appointment.Cancel(now));
         }
 
+        [Fact]
+        public void OverlapsWith_WhenExistingIsCancelled_ReturnsFalse()
+        {
+            // Arrange
+            var existing = CreateAppointment(10, 0, 30);        
+            existing.Cancel(new DateTime(2030, 5, 30, 9, 0, 0)); 
+            var newAppointment = CreateAppointment(10, 0, 30);  
+
+            // Act
+            var result = newAppointment.OverlapsWith(existing);
+
+            // Assert
+            Assert.False(result);
+        }
+
+
         private static Appointment CreateAppointmentOnJune2At10()
         {
             var service = new Service("Usluga", TimeSpan.FromMinutes(30), 10m);
