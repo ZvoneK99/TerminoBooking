@@ -1,4 +1,5 @@
-﻿using TerminoBooking.Domain;
+﻿using System.Runtime.CompilerServices;
+using TerminoBooking.Domain;
 
 namespace TerminoBooking.UnitTests
 {
@@ -68,6 +69,66 @@ namespace TerminoBooking.UnitTests
             Assert.Equal(expected, result);
         }
 
+        [Fact]
+        public void Cancel_MoreThan24HoursBefore_CancelsAppointment()
+        {
 
+            //Arrange
+            var appointment = CreateAppointmentOnJune2At10();
+            var now = new DateTime(2030, 6, 1, 9, 0, 0);
+
+            //Act
+            appointment.Cancel(now);
+
+            //Assert
+            Assert.Equal(AppointmentStatus.Cancelled, appointment.Status);
+        }
+
+        [Fact]
+        public void Cancel_Exactly24HoursBefore_CancelsAppointment()
+        {
+
+            //Arrange
+            var appointment = CreateAppointmentOnJune2At10();
+            var now = new DateTime(2030, 6, 1, 10, 0, 0);
+
+            //Act
+            appointment.Cancel(now);
+
+            //Assert
+            Assert.Equal(AppointmentStatus.Cancelled, appointment.Status);
+        }
+
+        [Fact]
+        public void Cancel_LessThan24HoursBefore_Throws()
+        {
+
+            //Arrange
+            var appointment = CreateAppointmentOnJune2At10();
+            var now = new DateTime(2030, 6, 1, 15, 0, 0);
+
+            //Act and Assert
+            Assert.Throws<InvalidOperationException>(() => appointment.Cancel(now));
+        }
+
+        [Fact]
+        public void Cancel_AlreadyCancelled_Throws()
+        {
+
+            //Arrange
+            var appointment = CreateAppointmentOnJune2At10();
+            var now = new DateTime(2030, 6, 1, 9, 0, 0);
+            appointment.Cancel(now);
+
+            //Act and Assert
+            Assert.Throws<InvalidOperationException>(() => appointment.Cancel(now));
+        }
+
+        private static Appointment CreateAppointmentOnJune2At10()
+        {
+            var service = new Service("Usluga", TimeSpan.FromMinutes(30), 10m);
+            var start = new DateTime(2030, 6, 2, 10, 0, 0);
+            return new Appointment(Guid.NewGuid(), Guid.NewGuid(), service, start, Now);
+        }
     }
 }

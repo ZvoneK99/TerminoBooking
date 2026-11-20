@@ -37,7 +37,7 @@
 
             if (now > Start.AddHours(-24))
             {
-                throw new InvalidOperationException("Termin se može otkazati najranije 24 sata prije početka!");
+                throw new InvalidOperationException("Termin se može otkazati najkasnije 24 sata prije početka!");
             }
 
             Status = AppointmentStatus.Cancelled;
