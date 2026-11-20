@@ -10,8 +10,13 @@
         public DateTime End { get; private set; }
         public AppointmentStatus Status { get; private set; }
 
-        public Appointment(Guid clientId, Guid staffMemberId, Service service, DateTime start)
+        public Appointment(Guid clientId, Guid staffMemberId, Service service, DateTime start, DateTime now)
         {
+            if (start < now)
+            {
+                throw new ArgumentException("Početak termina ne može biti u prošlosti!", nameof(start));
+            }
+
             Id = Guid.NewGuid();
             ClientId = clientId;
             StaffMemberId = staffMemberId;
