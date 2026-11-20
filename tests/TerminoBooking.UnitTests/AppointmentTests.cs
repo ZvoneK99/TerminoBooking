@@ -41,6 +41,33 @@ namespace TerminoBooking.UnitTests
 
         }
 
+        private static Appointment CreateAppointment(int hour, int minute, int durationMinutes)
+        {
+            var service = new Service("Usluga", TimeSpan.FromMinutes(durationMinutes), 10m);
+            var start = new DateTime(2030, 6, 1, hour, minute, 0);
+            return new Appointment(Guid.NewGuid(), Guid.NewGuid(), service, start, Now);
+        }
+
+        [Theory]
+        [InlineData(9, 30, 30, false)]   //A
+        [InlineData(9, 45, 30, true)]    //B
+        [InlineData(10, 10, 10, true)]   //C
+        [InlineData(10, 15, 30, true)]   //D
+        [InlineData(9, 30, 90, true)]    //E
+        [InlineData(10, 30, 30, false)]  //F
+        public void OverlapsWith_ReturnsExpectedResult(int hour, int minute, int durationMinutes, bool expected)
+        {
+            // Arrange
+            var existing = CreateAppointment(10, 0, 30);   // postojeći: 10:00–10:30
+            var newAppointment = CreateAppointment(hour, minute, durationMinutes);
+
+            // Act
+            var result = newAppointment.OverlapsWith(existing);
+
+            // Assert
+            Assert.Equal(expected, result);
+        }
+
 
     }
 }
